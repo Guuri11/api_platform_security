@@ -32,7 +32,6 @@ use Symfony\Contracts\HttpClient\ResponseStreamInterface;
 final class Client implements HttpClientInterface
 {
     use HttpClientTrait;
-
     /**
      * @see HttpClientInterface::OPTIONS_DEFAULTS
      */

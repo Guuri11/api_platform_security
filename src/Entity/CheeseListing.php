@@ -14,9 +14,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\SerializedName;
 use Symfony\Component\Validator\Constraints as Assert;
 
+// Security en linea 30, cambia el comportamiento de validacion de Serializacion de ApiResource, comprobando primero el acceso y luego el resto del proceso. 
+// Capitulo 13.
+
 /**
  * @ApiResource(
- *     collectionOperations={"get", "post"},
  *     itemOperations={
  *          "get"={
  *              "normalization_context"={"groups"={"cheese_listing:read", "cheese_listing:item:get"}},
@@ -26,7 +28,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     },
 *      collectionOperations={
  *          "get",
- *          "post"={ "access_control" = "is_granted('ROLE_USER')" }
+ *          "post"={ "security" = "is_granted('ROLE_USER')" }
  *     },
  *     shortName="cheeses",
  *     normalizationContext={"groups"={"cheese_listing:read"}, "swagger_definition_name"="Read"},

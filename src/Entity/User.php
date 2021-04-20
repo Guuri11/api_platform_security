@@ -23,7 +23,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * 
  *     itemOperations={
  *          "get",
- *          "put" = { "security" = "is_granted('ROLE_USER') and object.getId() == user" },
+ *          "put" = { "security" = "is_granted('EDIT', object)" },
  *          "delete" = { "security" = "is_granted('ROLE_ADMIN')" },
  *     },
  *     normalizationContext={"groups"={"user:read"}},

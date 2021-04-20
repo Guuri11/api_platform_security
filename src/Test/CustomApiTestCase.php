@@ -5,6 +5,7 @@ namespace App\Test;
 use App\ApiPlatform\Test\ApiTestCase;
 use App\ApiPlatform\Test\Client;
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 
 class CustomApiTestCase extends ApiTestCase
 {
@@ -21,7 +22,7 @@ class CustomApiTestCase extends ApiTestCase
 
         $user->setPassword($encoded);
 
-        $em = self::$container->get('doctrine')->getManager();
+        $em = $this->getEntityManager();
 
         $em->persist($user);
         $em->flush();
@@ -48,5 +49,10 @@ class CustomApiTestCase extends ApiTestCase
         $this->logIn($client,$email,$password);
 
         return $user;
+    }
+
+    public function getEntityManager():EntityManagerInterface
+    {
+        return self::$container->get('doctrine')->getManager();
     }
 }

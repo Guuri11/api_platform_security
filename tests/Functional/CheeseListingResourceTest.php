@@ -2,6 +2,7 @@
 
 namespace App\Tests\Functional;
 
+use App\Entity\CheeseListing;
 use App\Entity\User;
 use App\Test\CustomApiTestCase;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
@@ -35,4 +36,37 @@ class CheeseListingTestv extends CustomApiTestCase
 
     }
 
+    public function testUpdateCheeseListing()
+    {
+        $client = self::createClient();
+        $user1 = $this->createUser("user1@gmail.com", '123');
+        $user2 = $this->createUser("user2@gmail.com", '123');
+
+        $cheeseListing = new CheeseListing("Cheese test");
+        $cheeseListing->setOwner($user1);
+        $cheeseListing->setPrice(1000);
+        $cheeseListing->setDescription("description test");
+
+        $em = $this->getEntityManager();
+
+        $em->persist($cheeseListing);
+        $em->flush();
+
+        $this->logIn($client, 'user2@gmail.com', '123');
+        $client->request('PUT', '/api/cheeses/'.$cheeseListing->getId(), [
+            'headers' => [ 'Content-Type' =>'application/json'],
+            'json' => ['title'=> 'updated']
+        ]);   
+
+        $this->assertResponseStatusCodeSame(403);
+
+        $this->logIn($client, 'user1@gmail.com', '123');
+        $client->request('PUT', '/api/cheeses/'.$cheeseListing->getId(), [
+            'headers' => [ 'Content-Type' =>'application/json'],
+            'json' => ['title'=> 'updated']
+        ]);        
+
+        $this->assertResponseStatusCodeSame(200);
+
+    }
 }

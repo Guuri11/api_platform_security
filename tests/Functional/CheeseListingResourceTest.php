@@ -55,7 +55,7 @@ class CheeseListingTestv extends CustomApiTestCase
         $this->logIn($client, 'user2@gmail.com', '123');
         $client->request('PUT', '/api/cheeses/'.$cheeseListing->getId(), [
             'headers' => [ 'Content-Type' =>'application/json'],
-            'json' => ['title'=> 'updated']
+            'json' => ['title'=> 'updated', 'owner'=> '/api/users/'.$user2->getId()]
         ]);   
 
         $this->assertResponseStatusCodeSame(403);

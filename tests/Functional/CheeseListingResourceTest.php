@@ -7,7 +7,7 @@ use App\Entity\User;
 use App\Test\CustomApiTestCase;
 use Hautelook\AliceBundle\PhpUnit\ReloadDatabaseTrait;
 
-class CheeseListingTestv extends CustomApiTestCase
+class CheeseListingTest extends CustomApiTestCase
 {
 
     // esto está op, vacia nuestra base de datos de tests para operar de nuevo lmao
